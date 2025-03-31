@@ -93,6 +93,12 @@ au sein du sous réseau docker movies_default
 
 docker run -it --network movies_default postgres:17 psql -U movie -d dbmovies -h db
 
+### Volumes
+docker compose -p movies exec -it db bash -c "ls -l /docker-entrypoint-initdb.d"  
+
+docker compose -p movies exec -it db psql -U movie -d dbmovies -c " insert into movie (title, year) values ('Les Animaux Fantastiques', 2016);"
+docker compose -p movies exec -it db psql -U movie -d dbmovies -c "select * from movie where title like 'Les Animaux%'"
+
 
 
 
