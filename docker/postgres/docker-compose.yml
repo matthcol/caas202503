@@ -1,0 +1,22 @@
+services:
+
+  db:
+    image: postgres:17
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_USER: movie
+      POSTGRES_DB: dbmovies
+    ports:
+      # - 5432:5432
+      - 127.0.0.1:5433:5432
+
+  pgadmin4:
+    image: elestio/pgadmin:latest
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.org
+      PGADMIN_DEFAULT_PASSWORD: mysecretpassword
+    ports:
+    - 127.0.0.1:81:80
+    - 127.0.0.1:444:443
