@@ -1,0 +1,35 @@
+services:
+
+  db:
+    image: postgres:${DB_TAG:-latest}
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: ${DB_DBNAME:-postgres}
+    ports:
+      - ${DB_PORT:-5432}:5432
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d:ro
+      - vpgdata:/var/lib/postgresql/data/
+
+  dbadmin:
+    image: elestio/pgadmin:${DBADMIN_TAG:-latest}
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${DBADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${DBADMIN_PASSWORD}
+    ports:
+    - ${DBADMIN_PORT:-80}:80
+    - ${DBADMIN_SECURED_PORT:-443}:443
+
+  api:
+    build: pythonapi
+    restart: always
+    environment:
+      DB_URL: postgresql+psycopg2://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_DBNAME:-postgres}
+    ports:
+      - ${API_PORT}:8080
+      
+volumes:
+  vpgdata:
