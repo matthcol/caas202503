@@ -10,6 +10,9 @@ services:
     ports:
       # - 5432:5432
       - 127.0.0.1:5433:5432
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d:ro
+      - vpgdata:/var/lib/postgresql/data/
 
   pgadmin4:
     image: elestio/pgadmin:latest
@@ -20,3 +23,6 @@ services:
     ports:
     - 127.0.0.1:81:80
     - 127.0.0.1:444:443
+
+volumes:
+  vpgdata:

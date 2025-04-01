@@ -7,7 +7,7 @@ docker build -t pythonapp:1.0 .
 docker run -it --rm pythonapp:1.0 bash
 ```
 
-### Server mode (TODO)
+### Server mode
 
 ```bash
 docker run \
