@@ -14,6 +14,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: db
+  labels:
+    app: db
 spec:
   selector:
     matchLabels:
@@ -42,7 +44,12 @@ spec:
         volumeMounts:
           - mountPath: /var/lib/postgresql/data/
             name: movie-storage
+          - mountPath: /docker-entrypoint-initdb.d
+            name: movie-init-sql
       volumes:
         - name: movie-storage
           persistentVolumeClaim:
             claimName: db-pvc
+        - name: movie-init-sql
+          configMap: 
+            name: db-init-sql
