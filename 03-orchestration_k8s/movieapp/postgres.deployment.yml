@@ -35,12 +35,30 @@ spec:
         ports:
         - containerPort: 5432
         env:
+          # # direct definition #
+          # - name: POSTGRES_USER
+          #   value: movie
+          
+          # # charger les valeurs individuellement depuis 1 configmap ou 1 secret
           - name: POSTGRES_USER
-            value: movie
+            valueFrom:
+              configMapKeyRef:
+                name: db-env
+                key: POSTGRES_USER
           - name: POSTGRES_PASSWORD
-            value: moviepassword
+            valueFrom: 
+              secretKeyRef:
+                name: db-secret
+                key: POSTGRES_PASSWORD
           - name: POSTGRES_DB
-            value: dbmovies
+            valueFrom:
+              configMapKeyRef:
+                name: db-env
+                key: POSTGRES_DB
+        # # charger tout un fichier d'environnement, wrappé dans un configmap 
+        # envFrom:
+        #   - configMapRef:
+        #       name: db-env2
         volumeMounts:
           - mountPath: /var/lib/postgresql/data/
             name: movie-storage
