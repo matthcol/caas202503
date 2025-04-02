@@ -92,6 +92,42 @@ curl -X 'POST' \
 }'
 ```
 
+## rollout update
+build new version of api (add route /persons)
+
+docker build api -t movieapi:1.1
+docker image ls
+
+Declencher le rollout update en changeant l'image
+kubectl set image deploy -l app=api  api=movieapi:1.1 
+
+kubectl rollout status deployment/api
+
+
+NAME                   READY   STATUS    RESTARTS   AGE
+api-5d576d9bc4-5z8s8   1/1     Running   0          47m
+api-5d576d9bc4-d5n6b   1/1     Running   0          47m
+api-5d576d9bc4-n4jmm   1/1     Running   0          47m
+
+NAME                   READY   STATUS    RESTARTS   AGE
+api-6d9fb9f5fc-6jpg6   1/1     Running   0          17s
+api-6d9fb9f5fc-hljd5   1/1     Running   0          14s
+api-6d9fb9f5fc-hnb66   1/1     Running   0          19s
+
+Retour arrière:
+kubectl rollout undo deployment/api
+
+NAME                   READY   STATUS    RESTARTS   AGE
+api-5d576d9bc4-bd2cr   1/1     Running   0          24s
+api-5d576d9bc4-swm5d   1/1     Running   0          27s
+api-5d576d9bc4-vmjts   1/1     Running   0          26s
+
+Restart en mode rollout
+kubectl rollout restart deployment/api
+
+
+Alt: kubectl edit
+kubectl edit deployment/api
 
 
 
