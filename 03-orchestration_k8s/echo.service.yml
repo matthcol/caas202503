@@ -1,0 +1,24 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: echosolo3
+  labels:
+    app: echosolo3
+    category: demo
+spec:
+  containers:
+    - name: echosolo3
+      image: 'kicbase/echo-server:1.0'
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: echosolo3-service
+  labels:
+    app: echosolo3
+spec:
+  selector:
+    app: echosolo3
+  ports:
+    - port: 8080
+  type: NodePort

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echosolo4
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: echosolo4
+  template:
+    metadata:
+      labels:
+        app: echosolo4
+    spec:
+      containers:
+      - name: echosolo4
+        image: 'kicbase/echo-server:1.0'
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        # ports:
+        # - containerPort: <Port>
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: echosolo4-service
+  labels:
+    app: echosolo4
+spec:
+  selector:
+    app: echosolo4
+  ports:
+    - port: 8080
+  type: LoadBalancer
