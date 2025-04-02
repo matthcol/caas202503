@@ -7,6 +7,9 @@ kubectl get cm db-init-sql -o jsonpath='{.data}'
 kubectl get cm db-init-sql -o jsonpath='{.data.*}'
 kubectl get cm db-init-sql -o jsonpath='{.data.01-tables\.sql}'
 
+NB: doc jsonpath for k8s
+https://kubernetes.io/docs/reference/kubectl/jsonpath/
+
 Autres solution: 
 - post install: cp + exec psql
 - initContainers + command psql
