@@ -71,3 +71,20 @@ spec:
         - name: movie-init-sql
           configMap: 
             name: db-init-sql
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-service
+  labels:
+    app: db
+spec:
+  selector:
+    app: db
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+  type: ClusterIP
+
+# TODO2: deployment + service nodeport pgadmin4 (!!autre fichier!!, app=dbadmin)
