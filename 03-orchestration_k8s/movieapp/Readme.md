@@ -63,6 +63,35 @@ kubectl get cm db-env2 -o jsonpath='{.data}'
 ## secret
 kubectl create secret generic db-secret '--from-literal=POSTGRES_PASSWORD=eR*%@aq~&qsfgD23'
 
+## api
+kubectl apply -f .\api.deployment.yml
+kubectl get po,deploy,svc
+minikube service api-service
+
+open navigator with http://127.0.0.1:57070/docs
+
+Curl queries
+
+GET:
+```
+curl -X 'GET' \
+  'http://127.0.0.1:57070/movies/' \
+  -H 'accept: application/json'
+```
+
+POST:
+```
+curl -X 'POST' \
+  'http://127.0.0.1:57070/movies/' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "title": "Les Animaux Fantastiques",
+  "year": 2016,
+  "duration": 115
+}'
+```
+
 
 
 
