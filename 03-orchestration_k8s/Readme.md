@@ -31,6 +31,7 @@ function kubectl { minikube kubectl -- $args }
 doskey kubectl=minikube kubectl $*
 
 ### Dind (Docker in Docker)
+```
 docker ps                               # => minikube
 docker exec -it minikube docker ps -a   # containers used by minikube
 
@@ -38,38 +39,51 @@ docker image ls
 docker exec -it minikube docker image ls
 
 minikube docker-env
+```
 => use with eval (linux) ou follow instruction in powershell
 Ex: 
-- eval $(minikube docker-env)
-- & minikube -p minikube docker-env --shell powershell | Invoke-Expression
+- `eval $(minikube docker-env)`
+- `& minikube -p minikube docker-env --shell powershell | Invoke-Expression`
 
+```
 docker ps
 docker image ls
-
+```
 ### Commands kubectl
+```
 kubectl api-resources
+```
 
 #### default namespace
+```
 get pods
 get pod
 get po
+```
 
 #### all namespaces
+```
 get po -A
+```
 
 #### a specific namespace
+```
 get pod -n kube-system
+```
 
 #### other options
+```
 -o json|yaml|...
 -L columns
 
 -l selector by label
- --show-labels
+--show-labels
+```
 
 ## dashboard
+```
 minikube dashboard
-
+```
 ## Tutorial minikube
 ### Deployment + Service
 ```
@@ -137,46 +151,58 @@ kubectl get -l app=hello-minikube3 pods,rs,deployments,svc
 ```
 
 Reprise de l'exemple (3e jour)
+```
 kubectl create deployment balanced --image=kicbase/echo-server:1.0
 kubectl expose deployment balanced --type=LoadBalancer --port=8080
+```
 
 
 Résistance aux pannes:
+```
 kubectl delete pod balanced-57c6cb5949-fz6rr
 kubectl delete pod -l app=balanced
+```
 
 Mis en pause:
+```
 kubectl scale --replicas=0 deployment/balanced
+```
 
 Suppression des pods => supprimer le déploiement
+```
 kubectl delete deployment -l app=balanced
+```
 
 ## Pod + Service
 Alternative au déploiement (pas de replicat set, scaling, rollout, ...)
 
 ### Pod
+```
 kubectl run echosolo --image=kicbase/echo-server:1.0
+```
 NB: label par défaut run=... (deployment: app=...)
-
+```
 kubectl run echosolo2 -l app=echosolo2 --image=kicbase/echo-server:1.0
+```
 
 ### Service
+```
 kubectl expose pod echosolo --type=NodePort --port=8080
+```
 => obtain CLUSTER-IP : 10.108.102.108
 
 ## Utilisation de fichier yaml
+```
 kubectl apply -f .\echo.service.yml
 kubectl get po,svc -l app=echosolo3
-
+```
 ## Diagnostic
 Logs:
+```
 kubectl logs echosolo4-54f4d856c8-d726n
-
+```
 Exec (à condition d'avoir bash ou sh)
-kubectl exec -it echosolo4-54f4d856c8-d726n -- bash 
-
-
-
-
-
+```
+kubectl exec -it echosolo4-54f4d856c8-d726n -- bash
+```
 
