@@ -26,10 +26,12 @@ docker volume ls
 minikube kubectl get pods
 ```
 
+Define an alias for kubectl:
+```
 alias kubectl='minikube kubectl --'
 function kubectl { minikube kubectl -- $args }
 doskey kubectl=minikube kubectl $*
-
+```
 ### Dind (Docker in Docker)
 ```
 docker ps                               # => minikube
